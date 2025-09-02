@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     public function index(){
-         $product = Product::all();
+        $product = Product::all();
         return view('ProductDisplay',['product' => $product ]);
     }
     public function details($id){
@@ -25,7 +25,7 @@ class ProductController extends Controller
       // $data =  ;
       $search = Product::
       where('name' , 'like' , '%'.$request->input('search').'%')->get();
-         
+
       // return $search;
       return view('SearchDataDisplay' , ['product' => $search]);
 
@@ -38,20 +38,20 @@ class ProductController extends Controller
         $cart->product_id=$req->product_id;
         $cart->save();
             //  return 'successfully ';
-        return redirect('/index') ;
+        return redirect()->route('user.dashboard') ;
       }
       else{
         return redirect('/');
       }
-        
+
     }
     static function cartItems(){
-     
+
       if(Session::has('user')){
       $userid=Session::get('user')['id'];
-      return Cart::where('user_id',$userid)->count(); 
+      return Cart::where('user_id',$userid)->count();
       }else{
-        return 0; 
+        return 0;
       }
     }
 
@@ -71,7 +71,7 @@ class ProductController extends Controller
       ->get();
 
       return view('CartListView' , ['products' =>  $data]);
-      } 
+      }
       else{
         return redirect('/');
       }
@@ -79,7 +79,7 @@ class ProductController extends Controller
     public function Removecart(request $req){
       $cartid = $req -> product_id ;
       Cart::destroy($cartid);
-      return redirect('/'); 
+      return redirect('/');
     }
     public function Order(){
        if(Session::has('user')){
@@ -88,7 +88,7 @@ class ProductController extends Controller
        ->join('products' , 'products.id' , 'cart.product_id')
        ->where('cart.user_id' , $userid)
        ->sum('products.price');
-      return view('OrderView',['total' => $total]); 
+      return view('OrderView',['total' => $total]);
        }
        else{
         return redirect('/');

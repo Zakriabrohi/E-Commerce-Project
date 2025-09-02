@@ -10,7 +10,7 @@
 
         <!-- Product Info -->
         <div class="col-md-6">
-            <a href="/index" class="btn btn-outline-secondary mb-3">← Go Back</a>
+            <a href="{{ route('user.dashboard') }}" class="btn btn-outline-secondary mb-3">← Go Back</a>
 
             <h2 class="mb-3"> {{ $ProDetails['name'] }}</h2>
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
   use App\Http\controllers\ProductController;
   $total = ProductController::cartItems();
 ?>
@@ -10,7 +10,7 @@
     <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand fw-bold text-primary" href="/index" style="font-size: 20px;">
+        <a class="navbar-brand fw-bold text-primary" href="{{ route('user.dashboard') }}" style="font-size: 20px;">
             <i class="bi bi-shop"></i> ABZ Shop
         </a>
 
@@ -37,7 +37,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cartlist">
-                        <i class="bi bi-cart3" style="color:red;"></i> 
+                        <i class="bi bi-cart3" style="color:red;"></i>
                         Cart(<span style="color:red;">{{$total}}</span>)
                     </a>
                 </li>
@@ -82,7 +82,7 @@
 
     .navbar-nav .nav-link {
         font-weight: 500;
-        font-size: 16px;                                                                        
+        font-size: 16px;
     }
 
     .navbar .btn {
