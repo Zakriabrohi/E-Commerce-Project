@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index(){
         $product = Product::all();
-        return view('ProductDisplay',['product' => $product ]);
+        return view('index',['product' => $product ]);
     }
     public function details($id){
       $details = Product::find($id);
@@ -38,7 +38,7 @@ class ProductController extends Controller
         $cart->product_id=$req->product_id;
         $cart->save();
             //  return 'successfully ';
-        return redirect()->route('user.dashboard') ;
+        return redirect('cartlist');
       }
       else{
         return redirect('/');
@@ -108,7 +108,7 @@ class ProductController extends Controller
           $order->save();
         }
         Cart::where('user_id' , $userid)->delete();
-        return redirect('/');
+        return redirect('/myorder');
     }
     public function myorder(){
        $userid = Session::get('user')['id'];
@@ -119,4 +119,27 @@ class ProductController extends Controller
 
        return view('MyOrdersView',['data' => $data]);
     }
+
+    public function product(request $request){
+         $product = product::all();
+         return view( 'ProductDisplay',  ['product' => $product]);
+    }
+
+            public function categoryProducts(Request $request)
+        {
+            // Get category from URL (e.g., Laptop, Android, iPhone)
+            $category = $request->query('Category');
+
+            // If "All Products" is clicked (or no category provided)
+            if (!$category) {
+                $products = Product::all();
+            } else {
+                // Fetch products by category
+                $products = Product::where('Category', $category)->get();
+            }
+
+            // Send products back to view
+            return view('ProductDisplay', ['product' => $products]);
+        }
+
 }

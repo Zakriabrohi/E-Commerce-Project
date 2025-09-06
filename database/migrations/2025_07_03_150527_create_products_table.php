@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('price');
             $table->string('Category');
-            $table->string('Gallery');
+            $table->string('Category')->nullable();
             $table->string('Discription');
             $table->timestamps();
         });

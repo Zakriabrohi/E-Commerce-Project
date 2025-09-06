@@ -11,9 +11,13 @@ use App\Http\Controllers\admin\SettingController as AdminSettingController;
 use App\Http\Middleware\UserAuth;
 
 
-Route::get('/first', function () {
-    return view('welcome');
-});
+// Route::get('/first', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/', function () {
+//     return view('practice');
+// });
 
 Route::get('/', function () {
     return view('login');
@@ -25,7 +29,7 @@ Route::get('/reg', function () {
 
 
 Route::get('/login' , [UserController::class,'login']);
-Route::get('/register' , [UserController::class,'register']);
+Route::post('/register' , [UserController::class,'register']);
 Route::get('/index' , [ProductController::class,'index'])->middleware(UserAuth::class)->name('user.dashboard');
 Route::get('/details/{id}' , [ProductController::class,'details']);
 Route::get('/search' , [ProductController::class,'search']);
@@ -36,19 +40,28 @@ Route::post('/remove_from_cart' , [ProductController::class,'Removecart']);
 Route::get('/order' , [ProductController::class,'Order']);
 Route::post('/ordernow' , [ProductController::class,'OrderNow']);
 Route::get('/myorder' , [ProductController::class,'MyOrder']);
+Route::get('/product' , [ProductController::class,'product']);
+// Route::get('/catagoryproducts' , [ProductController::class,'catagoryproducts']);
+// Route::get('/catagoryproducts' , [ProductController::class,'catagoryproducts']);
+Route::get('/catagoryproducts', [ProductController::class, 'categoryProducts']);
+
 
 // admin routes ...
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+    // Curd system in admin panel
     Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products');
     Route::post('/addproduct',[AdminProductController::class,'AddProducts'])->name('addproduct');
     Route::get('/addview',[AdminProductController::class,'AddView'])->name('addview');
     Route::put('/updateproducts/{id}',[AdminProductController::class,'UpdateProducts'])->name('updateproducts');
     Route::delete('/deleteprodects/{id}',[AdminProductController::class,'DeleteProdects'])->name('deleteprodects');
 
+    // order routes ...
     Route::get('/orders', [AdminOrdersCortroller::class, 'index'])->name('admin.orders');
+    Route::get('/ordersview/{id}' , [AdminOrdersCortroller::class , 'View'])->name('admin.OrderView');
+
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('admin.settings');
     Route::get('/logout' , [ProductController::class,'logout'])->name('admin.logout');
